@@ -13,6 +13,18 @@ function getAllWithVideos() {
   });
 }
 
+function getAll() {
+  return fetch(`${URL_CATEGORIA}`).then(async (response) => {
+    if(response.ok){
+      const res = await response.json();
+      return res;
+    }
+
+    throw new Error ('Não foi possível recuperar os dados');
+  });
+}
+
 export default {
-  getAllWithVideos
+  getAllWithVideos,
+  getAll
 };

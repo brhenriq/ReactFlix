@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Main = styled.main`
   background-color: var(--black);
@@ -10,13 +10,16 @@ const Main = styled.main`
   padding-top: 50px;
   padding-right: 5%;
   padding-left: 5%;
+  ${({ paddingAll }) => css `
+    padding: ${paddingAll};
+  `} 
 `;
 
-function TemplateBase({ children }){
+function TemplateBase({ children, paddingAll }){
   return (
     <>
         <Menu />
-          <Main>
+          <Main paddingAll={paddingAll}>
             {children}
           </Main>
         <Footer />

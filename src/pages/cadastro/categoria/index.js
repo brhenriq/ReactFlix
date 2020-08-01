@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TemplateBase from '../../../components/TemplateBase';
+import Button from '../../../components/Button';
 import FormField from '../../../components/FormField';
 import useForm from '../../../hooks/useForm';
 
@@ -27,7 +28,10 @@ function CadastroCategoria() {
 
 
   useEffect(() => {
-    const url = 'http://localhost:8080/categorias';
+    const url = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://testealura-flix.herokuapp.com/categorias';
+
     fetch(url).then(async (response) => {
       const res = await response.json();
       setCategorias([
@@ -65,9 +69,9 @@ function CadastroCategoria() {
           onChange={handleValues}
         />
 
-        <button>
+        <Button>
           Cadastrar
-        </button>
+        </Button>
       </form>
 
       {categorias.length === 0 &&(
