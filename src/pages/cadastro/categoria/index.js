@@ -1,39 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TemplateBase from '../../../components/TemplateBase';
-import FormField from '../../../components/FormField'
+import FormField from '../../../components/FormField';
+import useForm from '../../../hooks/useForm';
 
 
 function CadastroCategoria() {
   const valoresIniciais = {
-    nome: '',
+    titulo: '',
     descricao: '',
     cor: ''
   }
 
-  const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
+  const { handleValues, values, clarForm }= useForm(valoresIniciais);
 
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor
-    });
-  }
+  const [categorias, setCategorias] = useState([]);
+
+
 
   function handleSubmit(e) {
     e.preventDefault();
     setCategorias([...categorias, values]);
-    setValues(valoresIniciais);
+    clarForm();
   }
 
-  function handleValues(e) {
-    //const { getAttribute, value } = e.target;
-    setValue(
-      e.target.getAttribute('name'),
-      e.target.value
-    );
-  }
+
 
   useEffect(() => {
     const url = 'http://localhost:8080/categorias';
@@ -51,10 +42,10 @@ function CadastroCategoria() {
 
       <form onSubmit={handleSubmit}>
         <FormField
-          label="Nome"
+          label="Título"
           type="text"
-          name="nome"
-          value={values.nome}
+          name="titulo"
+          value={values.titulo}
           onChange={handleValues}
         />
 
@@ -88,7 +79,7 @@ function CadastroCategoria() {
       <ul>
         {categorias.map((categoria, indice) => {
           return (
-            <li key={`${categoria}${indice}`}>
+            <li key={`${categoria.titulo}${indice}`}>
               {categoria.titulo}
             </li>
           )
